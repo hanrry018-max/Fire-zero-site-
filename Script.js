@@ -1,6 +1,9 @@
-console.log('FIRE ZERO loaded successfully!');
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-// Função simples para demonstrar que o JS está funcionando
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Página carregada completamente!');
-});
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    outDir: 'dist'
+  }
+})

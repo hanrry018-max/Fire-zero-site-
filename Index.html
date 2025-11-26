@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Zero - Tecnologia que protege o futuro do planeta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e configurações gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Efeito de partículas de fogo */
+        #fire-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ff6b35;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff6b35, 0 0 20px #ff6b35;
+            opacity: 0;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) translateX(20px);
+                opacity: 0;
+            }
+        }
+        
+        /* Estilo do cabeçalho */
+        header {
+            background: linear-gradient(to bottom, rgba(255, 107, 53, 0.8), rgba(10, 10, 10, 0.9));
+            color: white;
+            text-align: center;
+            padding: 4rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .flame {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, rgba(255, 107, 53, 0.3), transparent);
+            z-index: 1;
+        }
+        
+        .logo {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px #ff6b35, 0 0 20px #ff6b35, 0 0 30px #ff6b35;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite alternate;
+        }
+        
+        @keyframes flicker {
+            0%, 100% {
+                text-shadow: 0 0 10px #ff6b35, 0 0 20px #ff6b35, 0 0 30px #ff6b35;
+            }
+            50% {
+                text-shadow: 0 0 5px #ff6b35, 0 0 10px #ff6b35, 0 0 15px #ff6b35, 0 0 20px #ff6b35;
+            }
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .authors {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Seções gerais */
+        section {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #ff6b35;
+            position: relative;
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, #ff6b35, transparent);
+            margin: 1rem auto;
+            border-radius: 2px;
+            box-shadow: 0 0 10px #ff6b35;
+        }
+        
+        /* Seção Brasil em Chamas */
+        .brasil-chamas {
+            background: rgba(30, 30, 30, 0.7);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.2);
+            border-radius: 15px;
+            margin: 2rem auto;
+            padding: 3rem;
+            text-align: center;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .brasil-chamas:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+        
+        .incendio-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #ff6b35;
+            margin: 1.5rem 0;
+            text-shadow: 0 0 15px #ff6b35;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        /* Seção sobre o app */
+        .app-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature {
+            flex: 1 1 300px;
+            background: rgba(30, 30, 30, 0.7);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+            text-align: center;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.2), transparent);
+            transition: left 0.7s;
+        }
+        
+        .feature:hover::before {
+            left: 100%;
+        }
+        
+        .feature:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 30px rgba(255, 107, 53, 0.4);
+        }
+        
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #ff6b35;
+            text-shadow: 0 0 10px #ff6b35;
+        }
+        
+        /* Seção denúncia */
+        .denuncia-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            flex: 1 1 200px;
+            background: rgba(30, 30, 30, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+            text-align: center;
+            position: relative;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .step:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff6b35;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px #ff6b35;
+        }
+        
+        /* Seção impacto */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .impact-item {
+            background: rgba(30, 30, 30, 0.7);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+            text-align: center;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .impact-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(to top, rgba(255, 107, 53, 0.3), transparent);
+            transition: height 0.5s ease;
+            z-index: -1;
+        }
+        
+        .impact-item:hover::after {
+            height: 100%;
+        }
+        
+        .impact-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+        
+        /* Seção como funciona */
+        .funcionamento {
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-top: 2rem;
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.2);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .problema {
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            color: #ffa366;
+            text-shadow: 0 0 5px rgba(255, 107, 53, 0.5);
+        }
+        
+        .processo {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .processo-item {
+            flex: 1 1 300px;
+            background: rgba(40, 40, 40, 0.7);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+            text-align: center;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .processo-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+        
+        .processo-titulo {
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #ff6b35;
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+            font-size: 1.5rem;
+        }
+        
+        /* Rodapé */
+        footer {
+            background: linear-gradient(to top, rgba(255, 107, 53, 0.8), rgba(10, 10, 10, 0.9));
+            color: white;
+            text-align: center;
+            padding: 4rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer-flame {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(255, 107, 53, 0.3), transparent);
+            z-index: 1;
+        }
+        
+        .footer-logo {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px #ff6b35;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 2rem;
+            transition: all 0.5s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+        
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.7s;
+        }
+        
+        .download-btn:hover::before {
+            left: 100%;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.6);
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .incendio-number {
+                font-size: 3rem;
+            }
+            
+            .feature, .step, .impact-item, .processo-item {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Efeito de partículas de fogo -->
+    <div id="fire-particles"></div>
+    
+    <header>
+        <div class="flame"></div>
+        <div class="logo">FIRE ZERO</div>
+        <p class="tagline">Tecnologia que protege o futuro do planeta</p>
+        <p>Um aplicativo para prevenir e combater queimadas com a ajuda de todos.</p>
+        <p class="authors">Miriã, Vitória, Clara e Lauany 2° 28</p>
+    </header>
+    
+    <section>
+        <h2 class="section-title">O BRASIL EM CHAMAS</h2>
+        <div class="brasil-chamas">
+            <p>Todos os anos, milhares de queimadas destroem florestas, poluem o ar e ameaçam vidas.</p>
+            <div class="incendio-number">278.000+</div>
+            <p>Em 2024, o INPE (Instituto Nacional de Pesquisas Espaciais) registrou mais de 278 mil focos de incêndio.</p>
+        </div>
+    </section>
+    
+    <section>
+        <h2 class="section-title">SURGE O FIRE ZERO APP</h2>
+        <p style="text-align: center; margin-bottom: 2rem;">Criamos um aplicativo que usa tecnologia e cidadania para prevenir queimadas:</p>
+        
+        <div class="app-features">
+            <div class="feature">
+                <div class="feature-icon"><i class="fas fa-satellite-dish"></i></div>
+                <h3>Monitoramento em tempo real</h3>
+                <p>Acompanhe as áreas de risco e receba alertas imediatos sobre possíveis focos de incêndio.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <h3>Denúncia rápida de focos</h3>
+                <p>Reporte focos de incêndio de forma rápida e fácil, com envio de fotos e localização precisa.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                <h3>Educação ambiental</h3>
+                <p>Aprenda sobre prevenção de queimadas e como proteger o meio ambiente com conteúdo educativo.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2 class="section-title">DENUNCIE, MONITORE, PROTEJA</h2>
+        
+        <div class="denuncia-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Fotografe e envie</h3>
+                <p>O usuário fotografa e envia a denúncia através do aplicativo.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Localização automática</h3>
+                <p>O sistema identifica automaticamente a localização do foco de incêndio.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Alerta instantâneo</h3>
+                <p>As autoridades recebem o alerta instantaneamente.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Resposta rápida</h3>
+                <p>A resposta acontece mais rápido, evitando grandes incêndios.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2 class="section-title">O IMPACTO DO FIRE ZERO</h2>
+        
+        <div class="impact-grid">
+            <div class="impact-item">
+                <h3>Redução de queimadas</h3>
+                <p>Diminuição significativa no número de queimadas nas áreas monitoradas.</p>
+            </div>
+            <div class="impact-item">
+                <h3>Participação comunitária</h3>
+                <p>Envolvimento ativo da comunidade na proteção do meio ambiente.</p>
+            </div>
+            <div class="impact-item">
+                <h3>Resposta ágil</h3>
+                <p>Equipes de combate conseguem responder mais rapidamente aos incidentes.</p>
+            </div>
+            <div class="impact-item">
+                <h3>Consciência ambiental</h3>
+                <p>Aumento da educação e consciência ambiental na população.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2 class="section-title">COMO O APLICATIVO FUNCIONA</h2>
+        
+        <div class="funcionamento">
+            <p class="problema">"Infelizmente, ainda vemos muitos problemas que afetam o meio ambiente... Mas agora existe um jeito fácil de fazer a diferença!"</p>
+            
+            <div class="processo">
+                <div class="processo-item">
+                    <div class="processo-titulo">A DENÚNCIA</div>
+                    <p>"O usuário abre o aplicativo e faz a denúncia."</p>
+                    <p style="margin-top: 1rem; font-style: italic; color: #ffa366;">Usuário: "Pronto! Denúncia enviada."</p>
+                </div>
+                <div class="processo-item">
+                    <div class="processo-titulo">A AÇÃO</div>
+                    <p>"O fiscal recebe o alerta na hora! E vai até lá resolver o problema."</p>
+                </div>
+                <div class="processo-item">
+                    <div class="processo-titulo">O RESULTADO</div>
+                    <p>"Com o aplicativo sendo utilizado pela população, as queimadas foram reduzidas, houve aprendizado ambiental e ajudou as equipes a localizarem os incidentes mais rápido e com mais precisão."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-flame"></div>
+        <div class="footer-logo">FIRE ZERO</div>
+        <p>Tecnologia a favor da vida!</p>
+        <a href="#" class="download-btn">Baixe agora e ajude a cuidar do planeta</a>
+    </footer>
+
+    <script>
+        // Criar partículas de fogo
+        function createFireParticles() {
+            const container = document.getElementById('fire-particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Posição aleatória
+                const left = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = 10 + Math.random() * 10;
+                
+                particle.style.left = `${left}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Tamanho aleatório
+                const size = 2 + Math.random() * 4;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Inicializar partículas quando a página carregar
+        window.addEventListener('load', createFireParticles);
+        
+        // Adicionar efeito de digitação ao título
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.querySelector('.logo');
+            const originalText = logo.textContent;
+            logo.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    logo.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            };
+            
+            // Iniciar efeito de digitação após um breve delay
+            setTimeout(typeWriter, 500);
+        });
+    </script>
+</body>
+</html>
